@@ -2,4 +2,5 @@ FROM eval-multi-base:latest
 
 WORKDIR /home/runner
 ADD do do
+
 CMD /home/runner/do/run_tests.sh

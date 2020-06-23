@@ -129,6 +129,19 @@ func writeOutTest(test *Test, dir string) {
 	path = filepath.Join(dir, testScriptName)
 	u.WriteFileMust(path, []byte(s))
 	os.Chmod(path, 0755)
+	isDotNet := strings.HasSuffix(test.fileName, ".cs")
+	if isDotNet {
+		// synthesize a .csproj file so that dotnet run . work
+		s := `<Project Sdk="Microsoft.NET.Sdk">
+<PropertyGroup>
+	<OutputType>Exe</OutputType>
+	<TargetFramework>netcoreapp3.1</TargetFramework>
+</PropertyGroup>
+</Project>
+`
+		path = filepath.Join(dir, "main.csproj")
+		u.WriteFileMust(path, []byte(s))
+	}
 }
 
 func writeOutTests(tests []*Test) {

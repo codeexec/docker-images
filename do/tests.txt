@@ -1,3 +1,50 @@
+:file main.cs
+:run dotnet run .
+using System;
+namespace Scripts
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Hello from dotnet");
+        }
+    }
+}
+--
+Hello from dotnet
+---
+:file index.js
+:run qjs $file
+console.log("hello from quickjs");
+--
+hello from quickjs
+---
+:file index.js
+:run qjsc -o hello $file
+:run ./hello
+console.log("hello from quickjs compiled");
+--
+hello from quickjs compiled
+---
+:file main.py
+:run python3 -B $file
+print("hello from python 3")
+--
+hello from python 3
+---
+:file main.lua
+:run luajit $file
+print("hello from luajit")
+--
+hello from luajit
+---
+:file welcome.ts
+:run deno run $file
+console.log("Welcome to Deno")
+--
+Welcome to Deno
+---
 :file Main.java
 :run javac $file
 :run java Main

@@ -24,6 +24,7 @@ ADD lang lang
 RUN chmod ug+x lang/*.sh
 
 RUN lang/clang-llvm.sh
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 RUN lang/csharp.sh
 RUN lang/dart.sh
 # must install before deno.sh

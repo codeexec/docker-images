@@ -11,5 +11,3 @@
   tinygo ? https://tinygo.org/getting-started/linux/
   android (android-sdk ?)
   go with generics
-- run tests
-- write tests for every language
