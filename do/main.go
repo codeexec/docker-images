@@ -18,52 +18,39 @@ func dockerBuild() {
 	u.RunCmdLoggedMust(cmd)
 }
 
-func dockerRun() {
-	cmd := exec.Command("docker", "run", "--rm", "-it", "eval-multi-base:latest", "/bin/bash")
-	u.RunCmdMust(cmd)
-}
-
 func main() {
 	var (
 		flgRunTests    bool
 		flgBuildGcr    bool
 		flgDockerBuild bool
-		flgDockerRun   bool
 	)
 
-	flag.BoolVar(&flgRunTests, "run-tests", false, "run tests using docker image")
+	flag.BoolVar(&flgRunTests, "run-tests", false, "run tests inside docker image")
 	flag.BoolVar(&flgBuildGcr, "build-gcr", false, "submit to GCR for build")
 	flag.BoolVar(&flgDockerBuild, "docker-build", false, "build the image locally with docker")
-	flag.BoolVar(&flgDockerRun, "docker-run", false, "run the image locally with docker")
 	flag.Parse()
 
 	timeStart := time.Now()
 
 	if flgRunTests {
+		// inside docker our parent dir /home/runner
 		u.CdUpDir("runner")
 		runTests()
+		fmt.Printf("Took %s\n", time.Since(timeStart))
 		return
 	}
 
 	u.CdUpDir("codeeval-images")
-	if flgRunTests {
-		runTests()
-		return
-	}
 
 	if flgBuildGcr {
 		buildGcr()
+		fmt.Printf("Took %s\n", time.Since(timeStart))
 		return
 	}
 
 	if flgDockerBuild {
 		dockerBuild()
 		fmt.Printf("Took %s\n", time.Since(timeStart))
-		return
-	}
-
-	if flgDockerRun {
-		dockerRun()
 		return
 	}
 
