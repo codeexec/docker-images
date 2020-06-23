@@ -6,9 +6,9 @@ set -eux
 echo "installing dart"
 
 # https://dartdoc.takyam.com/downloads/linux.html
-curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list
-curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_unstable.list > /etc/apt/sources.list.d/dart_unstable.list
+curl -s https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+curl -s https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list
+curl -s https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_unstable.list > /etc/apt/sources.list.d/dart_unstable.list
 apt-get update
 apt-get install dart
 
