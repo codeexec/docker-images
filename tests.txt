@@ -1,12 +1,14 @@
 :file main.swift
-:run swiftc -o main && ./main
+:run swiftc $file -o main
+:run ./main
 :cleanup rm ./main
 print("hello from swift")
 --
 hello from swift
 ---
 :file main.c
-:clang-7 main.c -pthread -lm -o main && ./main
+:run clang-7 $file -pthread -lm -o main
+:run ./main
 :cleanup rm ./main
 #include "stdio.h"
 
@@ -17,7 +19,8 @@ int main(void) {
 hello from clang7 c
 ---
 :file main.cpp
-:clang++-7 -pthread -std=c++17 -o main && ./main
+:run clang++-7 $file -pthread -std=c++17 -o main
+:run ./main
 :cleanup rm ./main
 #include <iostream>
 #include <string>
@@ -29,7 +32,8 @@ int main() {
 hello from clang7 c++ 17
 ---
 :file main.cpp
-:clang++-7 -pthread -std=c++11 -o main && ./main
+:run clang++-7 $file -pthread -std=c++11 -o main
+:run ./main
 :cleanup rm ./main
 #include <iostream>
 #include <string>
@@ -42,7 +46,8 @@ int main() {
 hello from clang7 c=+
 ---
 :file main.cpp
-:clang++-10 -pthread -std=c++17 -o main && ./main
+:run clang++-10 $file -pthread -std=c++17 -o main
+:run ./main
 :cleanup rm ./main
 #include <iostream>
 #include <string>
@@ -54,9 +59,51 @@ int main() {
 hello from clang-10 c++
 ---
 :file main.dart
-:dart main.dart
+:run dart $file
 void main() {
   print('Hello from dart\n');
 }
 --
 Hello from dart
+---
+:file main.lua
+:run lua $file
+print("hello from lua\n")
+--
+hello from lua
+---
+:file index.js
+:run node $file
+console.log("hello from node");
+--
+hello from node
+---
+:file main.py
+:run python2 -B $file
+print "hello from python 2"
+--
+hello from python 2
+---
+:file main.rb
+:run ruby $file
+puts "hello from ruby\n"
+--
+hello from ruby
+---
+:file main.php
+:run php $file
+<?php echo "hello from php\n";>
+--
+hello from php
+---
+:file Main.java
+:run javac -d .
+:run java Main
+class Main {
+  public static void main(String[] args) {
+    System.out.println("hello from java");
+  }
+}
+--
+hello from java
+---

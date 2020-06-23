@@ -1,6 +1,9 @@
 #!/bin/bash
 set -eux
 
+# https://github.com/replit/polygott/blob/master/languages/lua.toml
+echo "installing lua"
+
 # http://www.lua.org/download.html
 curl -R -O http://www.lua.org/ftp/lua-5.3.5.tar.gz
 tar zxf lua-5.3.5.tar.gz

@@ -1,6 +1,10 @@
 #!/bin/bash
 set -eux
 
+# https://github.com/replit/polygott/blob/master/languages/nodejs.toml
+
+echo "installing nodejs"
+
 # nodejs 14.x
 
 curl -sL https://deb.nodesource.com/setup_14.x | bash -

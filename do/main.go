@@ -1,7 +1,23 @@
 package main
 
-import "fmt"
+import (
+	"flag"
+
+	"github.com/kjk/u"
+)
 
 func main() {
-	fmt.Printf("Hello\n")
+	u.CdUpDir("codeeval-images")
+
+	var (
+		flgTests bool
+	)
+
+	flag.BoolVar(&flgTests, "tests", false, "run tests using docker image")
+
+	if flgTests {
+		runTests()
+		return
+	}
+
 }

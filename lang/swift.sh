@@ -1,6 +1,7 @@
 #!/bin/bash
 set -eux
 
+# https://github.com/replit/polygott/blob/master/languages/swift.toml
 echo "installing swift"
 
 # https://swift.org/download/#releases

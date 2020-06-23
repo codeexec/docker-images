@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eux
 
+# https://github.com/replit/polygott/blob/master/languages/dart.toml
+
 echo "installing dart"
 
 # https://dartdoc.takyam.com/downloads/linux.html

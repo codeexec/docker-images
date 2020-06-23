@@ -3,6 +3,10 @@ set -eux
 
 echo "installing clang 10"
 
+# https://github.com/replit/polygott/blob/master/languages/c.toml
+# https://github.com/replit/polygott/blob/master/languages/cpp.toml
+# https://github.com/replit/polygott/blob/master/languages/cpp11.toml
+
 # this is a copy of with added installation of clang-format
 # https://apt.llvm.org/llvm.sh
 

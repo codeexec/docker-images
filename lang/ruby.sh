@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# https://github.com/replit/polygott/blob/master/languages/ruby.toml
+
 # /usr/share/rvm/scripts/rvm fails when this is set
 #set -eux
 
