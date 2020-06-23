@@ -1,1 +1,1 @@
-docker build -t multi:latest .
+docker build -t eval-multi-base:latest .

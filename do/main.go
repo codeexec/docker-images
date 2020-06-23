@@ -6,18 +6,30 @@ import (
 	"github.com/kjk/u"
 )
 
+var panicIf = u.PanicIf
+var panicIfErr = u.PanicIfErr
+
 func main() {
 	u.CdUpDir("codeeval-images")
 
 	var (
-		flgTests bool
+		flgRunTests bool
+		flgBuildGcr bool
 	)
 
-	flag.BoolVar(&flgTests, "tests", false, "run tests using docker image")
+	flag.BoolVar(&flgRunTests, "run-tests", false, "run tests using docker image")
+	flag.BoolVar(&flgBuildGcr, "build-gcr", false, "submit to GCR for build")
+	flag.Parse()
 
-	if flgTests {
+	if flgRunTests {
 		runTests()
 		return
 	}
 
+	if flgBuildGcr {
+		buildGcr()
+		return
+	}
+
+	flag.Usage()
 }

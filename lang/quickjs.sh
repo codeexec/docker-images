@@ -11,4 +11,5 @@ cd quickjs-2020-04-12
 make
 make install
 cd ..
-rm -rf quickjs-2020-04-12
+
+rm -rf quickjs-2020-04-12*
