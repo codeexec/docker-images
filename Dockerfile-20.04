@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 # https://github.com/replit/polygott/blob/master/packages.txt + more
 # some packages are needed for later scripts
-RUN apt-get install -y ca-certificates tzdata locales xz-utils unzip curl wget git subversion mercurial sqlite3 libsqlite3-dev gnupg build-essential libc6-dbg libssl-dev libreadline-dev libicu-dev libxml2 libedit2  lsb-release software-properties-common apt-utils apt-transport-https libevent-dev pkg-config cmake ninja-build
+RUN apt-get install -y locales curl wget xz-utils unzip git subversion mercurial bzr build-essential sqlite3 libsqlite3-dev gnupg libc6-dbg libssl-dev libreadline-dev libicu-dev libevent-dev  libedit2 libxml2 lsb-release software-properties-common apt-utils apt-transport-https pkg-config cmake ninja-build
 
 # versions in 20.04:
 # gcc 9.3
@@ -23,18 +23,19 @@ RUN apt-get install -y ca-certificates tzdata locales xz-utils unzip curl wget g
 ADD lang2 lang
 RUN chmod ug+x lang/*.sh
 
-RUN lang/swift.sh
+RUN lang/clang-llvm.sh
+RUN lang/csharp.sh
+RUN lang/dart.sh
+# must install before deno.sh
 RUN lang/nodejs.sh
 RUN lang/deno.sh
-RUN lang/csharp.sh
-RUN lang/quickjs.sh
-RUN lang/go.sh
-RUN lang/dart.sh
-
-RUN lang/clang-llvm.sh
+RUN lang/go2.sh
+RUN lang/java.sh
 RUN lang/lua.sh
 RUN lang/luajit.sh
-RUN lang/python3.sh
 RUN lang/php.sh
-RUN lang/java.sh
+RUN lang/python3.sh
+RUN lang/quickjs.sh
 RUN lang/ruby.sh
+RUN lang/rust.sh
+RUN lang/swift.sh

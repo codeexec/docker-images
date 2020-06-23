@@ -1,21 +1,14 @@
-python3.8 (is 3.6)
-https://github.com/replit/polygott/blob/master/languages/python3.toml
-
-rust
-https://github.com/replit/polygott/blob/master/languages/rust.toml
-
-latest gcc
-luajit
-
-https://github.com/replit/polygott/blob/master/languages/crystal.toml
-https://github.com/replit/polygott/blob/master/languages/erlang.toml
-https://github.com/replit/polygott/blob/master/languages/haskell.toml
-https://github.com/replit/polygott/blob/master/languages/julia.toml
-https://github.com/replit/polygott/blob/master/languages/kotlin.toml
-https://github.com/replit/polygott/blob/master/languages/nim.toml
-https://github.com/replit/polygott/blob/master/languages/scala.toml
-D
-
-run tests
-
-maybe upgrade to ubuntu 20.04
+- install languages:
+  https://github.com/replit/polygott/blob/master/languages/crystal.toml
+  https://github.com/replit/polygott/blob/master/languages/erlang.toml
+  https://github.com/replit/polygott/blob/master/languages/haskell.toml
+  https://github.com/replit/polygott/blob/master/languages/julia.toml
+  https://github.com/replit/polygott/blob/master/languages/kotlin.toml
+  https://github.com/replit/polygott/blob/master/languages/nim.toml
+  https://github.com/replit/polygott/blob/master/languages/scala.toml
+  D
+  zig
+  android
+  go with generics
+- run tests
+- write tests for every language
