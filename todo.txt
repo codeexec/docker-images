@@ -4,9 +4,8 @@ https://github.com/replit/polygott/blob/master/languages/python3.toml
 rust
 https://github.com/replit/polygott/blob/master/languages/rust.toml
 
-c#
-
 latest gcc
+luajit
 
 https://github.com/replit/polygott/blob/master/languages/crystal.toml
 https://github.com/replit/polygott/blob/master/languages/erlang.toml

@@ -4,7 +4,7 @@ set -eux
 # go 1.14.2
 # https://github.com/replit/polygott/blob/master/languages/go.toml
 
-echo "installing go"
+echo "installing go 1.14.2"
 
 add-apt-repository -y ppa:longsleep/golang-backports
 apt-get update

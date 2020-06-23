@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 # https://github.com/replit/polygott/blob/master/packages.txt + more
 # some packages are needed for later scripts
-RUN apt-get install -y ca-certificates locales xz-utils unzip curl wget git subversion mercurial sqlite3 libsqlite3-dev gnupg build-essential libc6-dbg libssl-dev libreadline-dev libicu-dev libxml2 libedit2  lsb-release software-properties-common apt-utils apt-transport-https libpython2.7 python-pip python-wheel python-dev libevent-dev cmake ninja-build tzdata php-cli php-pear -y
+RUN apt-get install -y ca-certificates tzdata locales xz-utils unzip curl wget git subversion mercurial sqlite3 libsqlite3-dev gnupg build-essential libc6-dbg libssl-dev libreadline-dev libicu-dev libxml2 libedit2  lsb-release software-properties-common apt-utils apt-transport-https libpython2.7 python-pip python-wheel python-dev libevent-dev cmake ninja-build pkg-config php-cli php-pear
 
 # versions in 18.04:
 # gcc 7.5
