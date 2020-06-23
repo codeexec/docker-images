@@ -17,7 +17,7 @@ func buildGcr() {
 	// https://cloud.google.com/sdk/gcloud/reference/builds/submit
 	{
 		configPath := filepath.Join("cloudbuild.yml")
-		cmd := exec.Command("gcloud", "builds", "submit", "--project", gcpProject, "--config", configPath)
+		cmd := exec.Command("gcloud", "builds", "submit", "--project", gcpProject, "--config", configPath, "--timeout=3600s")
 		u.RunCmdLoggedMust(cmd)
 	}
 }
