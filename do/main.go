@@ -24,8 +24,6 @@ func dockerRun() {
 }
 
 func main() {
-	u.CdUpDir("codeeval-images")
-
 	var (
 		flgRunTests    bool
 		flgBuildGcr    bool
@@ -41,6 +39,13 @@ func main() {
 
 	timeStart := time.Now()
 
+	if flgRunTests {
+		u.CdUpDir("runner")
+		runTests()
+		return
+	}
+
+	u.CdUpDir("codeeval-images")
 	if flgRunTests {
 		runTests()
 		return

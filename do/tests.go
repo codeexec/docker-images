@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	testsDir       = "temp_tests"
+	testsDir       = "tmp_tests"
 	testScriptName = "testscript.sh"
 )
 
@@ -29,6 +29,10 @@ type Test struct {
 
 func dirForTest(test *Test) string {
 	return filepath.Join(testsDir, fmt.Sprintf("%02d", test.n))
+}
+
+func dockerDirForTest(test *Test) string {
+	return filepath.Join("/home/runner", testsDir, fmt.Sprintf("%02d", test.n))
 }
 
 func eatPrefix(s string, prefix string) (string, bool) {
@@ -93,6 +97,7 @@ func validateTest(test *Test) {
 func buildTestScript(test *Test) string {
 	s := `#/bin/bash
 set -eux
+cd "$(dirname "$0")"
 
 `
 
@@ -123,6 +128,7 @@ func writeOutTest(test *Test, dir string) {
 	s := buildTestScript(test)
 	path = filepath.Join(dir, testScriptName)
 	u.WriteFileMust(path, []byte(s))
+	os.Chmod(path, 0755)
 }
 
 func writeOutTests(tests []*Test) {
@@ -169,13 +175,22 @@ func runTests() {
 	deleteTests(testsDir)
 	writeOutTests(tests)
 
+	var err error
 	for _, test := range tests {
-		fmt.Printf("test:\n%s\n---\n", test.src)
-		dir, err := filepath.Abs(dirForTest(test))
-		must(err)
-		v := fmt.Sprintf("%s:/test", dir)
-		// testScriptName
-		cmd := exec.Command("docker", "run", "--rm", "-v", v, "-w=/test", "eval-multi-base:latest", "/bin/bash -c ./testscript.sh")
-		u.RunCmdLoggedMust(cmd)
+		fmt.Printf("test %d:\n%s\n---\n", test.n, test.src)
+		if true {
+			cmd := exec.Command("/bin/bash", "-c", "./"+testScriptName)
+			cmd.Dir, err = filepath.Abs(dirForTest(test))
+			must(err)
+			fmt.Printf("Running in dir %s\n", cmd.Dir)
+			u.RunCmdLoggedMust(cmd)
+		} else {
+			localTestsDir, err := filepath.Abs(testsDir)
+			must(err)
+			v := fmt.Sprintf("%s:/tests", localTestsDir)
+			scriptPath := fmt.Sprintf("/tests/%02d/%s", test.n, testScriptName)
+			cmd := exec.Command("docker", "run", "--rm", "-v", v, "-w=/tests", "eval-multi-base:latest", "/bin/bash", "-c", scriptPath)
+			u.RunCmdLoggedMust(cmd)
+		}
 	}
 }
