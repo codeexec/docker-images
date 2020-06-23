@@ -2,6 +2,9 @@ package main
 
 import (
 	"flag"
+	"fmt"
+	"os/exec"
+	"time"
 
 	"github.com/kjk/u"
 )
@@ -10,11 +13,13 @@ var panicIf = u.PanicIf
 var panicIfErr = u.PanicIfErr
 
 func dockerBuild() {
-	u.RunCmdMust("docker", "build", "-f", "Dockerfile", "-t", "eval-multi-base:latest", ".")
+	cmd := exec.Command("docker", "build", "-f", "Dockerfile", "-t", "eval-multi-base:latest", ".")
+	u.RunCmdLoggedMust(cmd)
 }
 
 func dockerRun() {
-	u.RunCmdMust("docker", "run", "--rm", "-it", "eval-multi-base:latest", "/bin/bash")
+	cmd := exec.Command("docker", "run", "--rm", "-it", "eval-multi-base:latest", "/bin/bash")
+	u.RunCmdMust(cmd)
 }
 
 func main() {
@@ -33,6 +38,8 @@ func main() {
 	flag.BoolVar(&flgDockerRun, "docker-run", false, "run the image locally with docker")
 	flag.Parse()
 
+	timeStart := time.Now()
+
 	if flgRunTests {
 		runTests()
 		return
@@ -45,6 +52,7 @@ func main() {
 
 	if flgDockerBuild {
 		dockerBuild()
+		fmt.Printf("Took %s\n", time.Since(timeStart))
 		return
 	}
 
