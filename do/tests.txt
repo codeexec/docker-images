@@ -4,7 +4,7 @@
 :cleanup rm ./main
 print("hello from swift")
 --
-hello from swift
+hello from swift2
 ---
 :file main.c
 :run clang-7 $file -pthread -lm -o main
