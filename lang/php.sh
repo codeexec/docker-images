@@ -1,4 +1,6 @@
 #!/bin/bash
 set -eux
 
-# installed in Dockerfile
+echo "installing php 7.4.3"
+
+apt-get install -y php-cli php-pear 

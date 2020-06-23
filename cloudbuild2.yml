@@ -1,5 +1,0 @@
-steps:
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/cloudeval-255302/eval-multi-base2', '-f', 'Dockerfile-20.04', '.']
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/cloudeval-255302/eval-multi-base2']

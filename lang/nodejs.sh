@@ -3,7 +3,7 @@ set -eux
 
 # https://github.com/replit/polygott/blob/master/languages/nodejs.toml
 
-echo "installing nodejs"
+echo "installing nodejs 14.x"
 
 # nodejs 14.x
 
