@@ -39,3 +39,5 @@ RUN lang/quickjs.sh
 RUN lang/ruby.sh
 RUN lang/rust.sh
 RUN lang/swift.sh
+
+RUN rm -rf lang

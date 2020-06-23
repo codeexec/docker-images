@@ -10,3 +10,5 @@ wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-pr
 dpkg -i packages-microsoft-prod.deb
 apt-get update
 apt-get install -y dotnet-sdk-3.1 aspnetcore-runtime-3.1
+
+rm -rf packages-microsoft-prod.deb
