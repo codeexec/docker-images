@@ -1,0 +1,62 @@
+:file main.swift
+:run swiftc -o main && ./main
+:cleanup rm ./main
+print("hello from swift")
+--
+hello from swift
+---
+:file main.c
+:clang-7 main.c -pthread -lm -o main && ./main
+:cleanup rm ./main
+#include "stdio.h"
+
+int main(void) {
+  printf("hello from clang7 c\n");
+}
+--
+hello from clang7 c
+---
+:file main.cpp
+:clang++-7 -pthread -std=c++17 -o main && ./main
+:cleanup rm ./main
+#include <iostream>
+#include <string>
+
+int main() {
+  std::cout << "hello from clang7 c++ 17\n";
+}
+--
+hello from clang7 c++ 17
+---
+:file main.cpp
+:clang++-7 -pthread -std=c++11 -o main && ./main
+:cleanup rm ./main
+#include <iostream>
+#include <string>
+
+int main() {
+  std::string line;
+  std::cout << "hello from clang7 c++\n";
+}
+--
+hello from clang7 c=+
+---
+:file main.cpp
+:clang++-10 -pthread -std=c++17 -o main && ./main
+:cleanup rm ./main
+#include <iostream>
+#include <string>
+
+int main() {
+  std::cout << "hello from clang-10 c++\n";
+}
+--
+hello from clang-10 c++
+---
+:file main.dart
+:dart main.dart
+void main() {
+  print('Hello from dart\n');
+}
+--
+Hello from dart
