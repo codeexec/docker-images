@@ -5,14 +5,14 @@ set -eux
 echo "installing lua"
 
 # http://www.lua.org/download.html
-curl -R -O http://www.lua.org/ftp/lua-5.3.5.tar.gz
+wget -q http://www.lua.org/ftp/lua-5.3.5.tar.gz
 tar zxf lua-5.3.5.tar.gz
 cd lua-5.3.5
 make linux install
 cd ..
 
 # https://luarocks.org/
-wget https://luarocks.org/releases/luarocks-3.3.1.tar.gz
+wget -q https://luarocks.org/releases/luarocks-3.3.1.tar.gz
 tar zxpf luarocks-3.3.1.tar.gz
 cd luarocks-3.3.1
 ./configure

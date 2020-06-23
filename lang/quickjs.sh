@@ -5,7 +5,7 @@ set -eux
 echo "installing quickjs"
 
 # http://www.lua.org/download.html
-curl -R -O https://bellard.org/quickjs/quickjs-2020-04-12.tar.xz
+wget -q https://bellard.org/quickjs/quickjs-2020-04-12.tar.xz
 tar -xf quickjs-2020-04-12.tar.xz
 cd quickjs-2020-04-12
 make
