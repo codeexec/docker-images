@@ -1,5 +1,5 @@
-:file main.cs
 :run dotnet run .
+:file main.cs
 using System;
 namespace Scripts
 {
@@ -14,40 +14,40 @@ namespace Scripts
 --
 Hello from dotnet
 ---
-:file index.js
 :run qjs $file
+:file main.js
 console.log("hello from quickjs");
 --
 hello from quickjs
 ---
-:file index.js
 :run qjsc -o hello $file
 :run ./hello
+:file index.js
 console.log("hello from quickjs compiled");
 --
 hello from quickjs compiled
 ---
-:file main.py
 :run python3 -B $file
+:file main.py
 print("hello from python 3")
 --
 hello from python 3
 ---
-:file main.lua
 :run luajit $file
+:file main.lua
 print("hello from luajit")
 --
 hello from luajit
 ---
-:file welcome.ts
 :run deno run $file
+:file welcome.ts
 console.log("Welcome to Deno")
 --
 Welcome to Deno
 ---
-:file Main.java
 :run javac $file
 :run java Main
+:file Main.java
 class Main {
   public static void main(String[] args) {
     System.out.println("hello from java");
@@ -56,18 +56,18 @@ class Main {
 --
 hello from java
 ---
-:file main.swift
 :run swiftc $file -o main
 :run ./main
 :cleanup rm ./main
+:file main.swift
 print("hello from swift")
 --
 hello from swift
 ---
-:file main.c
 :run clang-7 $file -pthread -lm -o main
 :run ./main
 :cleanup rm ./main
+:file main.c
 #include "stdio.h"
 
 int main(void) {
@@ -76,10 +76,10 @@ int main(void) {
 --
 hello from clang7 c
 ---
-:file main.cpp
 :run clang++ $file -pthread -std=c++17 -o main
 :run ./main
 :cleanup rm ./main
+:file main.cpp
 #include <iostream>
 #include <string>
 
@@ -89,10 +89,10 @@ int main() {
 --
 hello from clang7 c++ 17
 ---
-:file main.cpp
 :run clang++ $file -pthread -std=c++11 -o main
 :run ./main
 :cleanup rm ./main
+:file main.cpp
 #include <iostream>
 #include <string>
 
@@ -103,10 +103,10 @@ int main() {
 --
 hello from clang7 c++ 11
 ---
-:file main.cpp
 :run clang++-10 $file -pthread -std=c++17 -o main
 :run ./main
 :cleanup rm ./main
+:file main.cpp
 #include <iostream>
 #include <string>
 
@@ -116,41 +116,41 @@ int main() {
 --
 hello from clang-10 c++
 ---
-:file main.dart
 :run dart $file
+:file main.dart
 void main() {
   print('Hello from dart');
 }
 --
 Hello from dart
 ---
-:file main.lua
 :run lua $file
+:file main.lua
 print("hello from lua")
 --
 hello from lua
 ---
-:file index.js
 :run node $file
+:file index.js
 console.log("hello from node");
 --
 hello from node
 ---
-:file main.py
 :run python2 -B $file
+:file main.py
 print "hello from python 2"
 --
 hello from python 2
 ---
-:file main.rb
 :run ruby $file
+:file main.rb
 puts "hello from ruby\n"
 --
 hello from ruby
 ---
-:file main.php
 :run php $file
-<?php echo "hello from php\n";
+:file main.php
+<?php echo "hello from php\n"; ?>
 --
 hello from php
 ---

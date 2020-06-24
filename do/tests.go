@@ -15,13 +15,20 @@ const (
 	testScriptName = "testscript.sh"
 )
 
+// TestFile represents a single file in a test case
+type TestFile struct {
+	fileName string
+	src      string
+
+	lines []string
+}
+
 // Test represents a single test case
 type Test struct {
-	fileName string
-	run      []string
-	cleanup  []string
-	src      string
-	output   string
+	files   []*TestFile
+	run     []string
+	cleanup []string
+	output  string
 	// unique n identifying a test, 0...N
 	n   int
 	raw string
@@ -41,27 +48,15 @@ func eatPrefix(s string, prefix string) (string, bool) {
 }
 
 /*
-:file main.swift
 :run swiftc $file -o main
 :run ./main
 :cleanup rm ./main
+:file main.swift
 print("hello from swift")
 --
 hello from swift
 */
 func parseDirective(s string, test *Test) {
-	if s, ok := eatPrefix(s, ":file "); ok {
-		test.fileName = strings.TrimSpace(s)
-		return
-	}
-	if s, ok := eatPrefix(s, ":run "); ok {
-		test.run = append(test.run, strings.TrimSpace(s))
-		return
-	}
-	if s, ok := eatPrefix(s, ":cleanup "); ok {
-		test.cleanup = append(test.cleanup, strings.TrimSpace(s))
-		return
-	}
 	panicIf(true, "unknown directive in line:\n%s\n\n", s)
 }
 
@@ -72,26 +67,50 @@ func parseTest(s string) *Test {
 	u.PanicIf(len(parts) != 2, "len(parts) == %d in:\n..%s..\n", len(parts), s)
 	res.output = parts[1]
 	lines := strings.Split(parts[0], "\n")
-	panicIf(len(lines) < 3)
+	panicIf(len(lines) < 3, "len(lines)=%d, s:\n%s\n", len(lines), s)
+	var file *TestFile
 	for len(lines) > 0 {
 		s := lines[0]
-		if s[0] != ':' {
-			break
+		if len(s) == 0 || s[0] != ':' {
+			// should only happen after :file directive
+			file.lines = append(file.lines, s)
+			lines = lines[1:]
+			continue
 		}
-		parseDirective(s, &res)
+		if file != nil {
+			file.src = strings.Join(file.lines, "\n")
+			res.files = append(res.files, file)
+			file = nil
+		}
+		if s, ok := eatPrefix(s, ":run "); ok {
+			res.run = append(res.run, strings.TrimSpace(s))
+		} else if s, ok := eatPrefix(s, ":cleanup "); ok {
+			res.cleanup = append(res.cleanup, strings.TrimSpace(s))
+		} else if s, ok := eatPrefix(s, ":file "); ok {
+			panicIf(file != nil)
+			file = &TestFile{
+				fileName: strings.TrimSpace(s),
+			}
+		}
 		lines = lines[1:]
 	}
-	panicIf(len(lines) == 0)
-	res.src = strings.Join(lines, "\n")
+	if file != nil {
+		file.src = strings.Join(file.lines, "\n")
+		res.files = append(res.files, file)
+	}
+	panicIf(len(lines) != 0)
 	return &res
 }
 
 func validateTest(test *Test) {
 	panicIf(test.raw == "")
-	panicIf(test.fileName == "", "test:\n%s\n", test.raw)
-	panicIf(test.src == "", "test:\n%s\n", test.raw)
+	panicIf(len(test.files) == 0, "test:\n%s\n", test.raw)
 	panicIf(test.output == "", "test:\n%s\n", test.raw)
 	panicIf(len(test.run) == 0, "test:\n%s\n", test.raw)
+	for _, f := range test.files {
+		panicIf(f.fileName == "", "test:\n%s\n", test.raw)
+		panicIf(f.src == "", "test:\n%s\n", test.raw)
+	}
 }
 
 func buildTestScript(test *Test) string {
@@ -101,8 +120,12 @@ cd "$(dirname "$0")"
 
 `
 
+	fileName := ""
+	if len(test.files) == 1 {
+		fileName = test.files[0].fileName
+	}
 	for idx, run := range test.run {
-		run = strings.Replace(run, "$file", test.fileName, -1)
+		run = strings.Replace(run, "$file", fileName, -1)
 		isLast := idx == len(test.run)-1
 		// we assume last command is the execution, so redirect the output to a file
 		// for comparison with expected
@@ -119,18 +142,41 @@ diff --ignore-trailing-space --unified output.txt exp_output.txt
 	return s
 }
 
+// c# is when at least one file is .cs and all other files
+// are non-source
+func isCSharp(files []*TestFile) bool {
+	nMatching := 0
+	for _, f := range files {
+		name := strings.ToLower(f.fileName)
+		if strings.HasSuffix(name, ".cs") {
+			nMatching++
+			continue
+		}
+		// those are extensions that
+		for _, suff := range []string{".txt", ".md", ".text", ".xml", ".html", ".css"} {
+			if !strings.HasSuffix(name, suff) {
+				return false
+			}
+		}
+	}
+	return nMatching > 0
+}
+
 func writeOutTest(test *Test, dir string) {
 	u.CreateDirMust(dir)
 	path := filepath.Join(dir, "exp_output.txt")
 	u.WriteFileMust(path, []byte(test.output))
-	path = filepath.Join(dir, test.fileName)
-	u.WriteFileMust(path, []byte(test.src))
+
+	for _, f := range test.files {
+		path = filepath.Join(dir, f.fileName)
+		u.WriteFileMust(path, []byte(f.src))
+	}
 	s := buildTestScript(test)
 	path = filepath.Join(dir, testScriptName)
 	u.WriteFileMust(path, []byte(s))
 	os.Chmod(path, 0755)
-	isDotNet := strings.HasSuffix(test.fileName, ".cs")
-	if isDotNet {
+
+	if isCSharp(test.files) {
 		// synthesize a .csproj file so that dotnet run . work
 		s := `<Project Sdk="Microsoft.NET.Sdk">
 <PropertyGroup>
@@ -190,7 +236,7 @@ func runTests() {
 
 	var err error
 	for _, test := range tests {
-		fmt.Printf("test %d:\n%s\n---\n", test.n, test.src)
+		fmt.Printf("test %d:\n%s\n---\n", test.n, test.files[0].src)
 		if true {
 			cmd := exec.Command("/bin/bash", "-c", "./"+testScriptName)
 			cmd.Dir, err = filepath.Abs(dirForTest(test))
