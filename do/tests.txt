@@ -10,13 +10,16 @@ extern int foo();
 int main() {
   auto n = foo();
   std::cout << "hello from multi-file clang-10 c++, n=" << n << "\n";
+  std::cerr << "error output\n";
 }
 :file second.cpp
 int foo() {
   return 8;
 }
---
+:stdout
 hello from multi-file clang-10 c++, n=8
+:stderr
+error output
 ---
 :run dotnet run .
 :file main.cs
@@ -31,38 +34,38 @@ namespace Scripts
         }
     }
 }
---
+:stdout
 Hello from dotnet
 ---
 :run qjs $file
 :file main.js
 console.log("hello from quickjs");
---
+:stdout
 hello from quickjs
 ---
 :run qjsc -o hello $file
 :run ./hello
 :file index.js
 console.log("hello from quickjs compiled");
---
+:stdout
 hello from quickjs compiled
 ---
 :run python3 -B $file
 :file main.py
 print("hello from python 3")
---
+:stdout
 hello from python 3
 ---
 :run luajit $file
 :file main.lua
 print("hello from luajit")
---
+:stdout
 hello from luajit
 ---
-:run deno run $file
+:run deno -q run $file
 :file welcome.ts
 console.log("Welcome to Deno")
---
+:stdout
 Welcome to Deno
 ---
 :run javac $file
@@ -73,7 +76,7 @@ class Main {
     System.out.println("hello from java");
   }
 }
---
+:stdout
 hello from java
 ---
 :run swiftc $file -o main
@@ -81,7 +84,7 @@ hello from java
 :cleanup rm ./main
 :file main.swift
 print("hello from swift")
---
+:stdout
 hello from swift
 ---
 :run clang-7 $file -pthread -lm -o main
@@ -93,7 +96,7 @@ hello from swift
 int main(void) {
   printf("hello from clang7 c\n");
 }
---
+:stdout
 hello from clang7 c
 ---
 :run clang++ $file -pthread -std=c++17 -o main
@@ -106,7 +109,7 @@ hello from clang7 c
 int main() {
   std::cout << "hello from clang7 c++ 17\n";
 }
---
+:stdout
 hello from clang7 c++ 17
 ---
 :run clang++ $file -pthread -std=c++11 -o main
@@ -120,7 +123,7 @@ int main() {
   std::string line;
   std::cout << "hello from clang7 c++ 11\n";
 }
---
+:stdout
 hello from clang7 c++ 11
 ---
 :run clang++-10 $file -pthread -std=c++17 -o main
@@ -133,7 +136,7 @@ hello from clang7 c++ 11
 int main() {
   std::cout << "hello from clang-10 c++\n";
 }
---
+:stdout
 hello from clang-10 c++
 ---
 :run dart $file
@@ -141,36 +144,36 @@ hello from clang-10 c++
 void main() {
   print('Hello from dart');
 }
---
+:stdout
 Hello from dart
 ---
 :run lua $file
 :file main.lua
 print("hello from lua")
---
+:stdout
 hello from lua
 ---
 :run node $file
 :file index.js
 console.log("hello from node");
---
+:stdout
 hello from node
 ---
 :run python2 -B $file
 :file main.py
 print "hello from python 2"
---
+:stdout
 hello from python 2
 ---
 :run ruby $file
 :file main.rb
 puts "hello from ruby\n"
---
+:stdout
 hello from ruby
 ---
 :run php $file
 :file main.php
 <?php echo "hello from php\n"; ?>
---
+:stdout
 hello from php
 ---
