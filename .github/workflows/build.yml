@@ -1,0 +1,22 @@
+name: build and test
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: build docker image
+        run: docker build -f Dockerfile -t eval-multi-base:latest .
+      
+      - name: build docker image for tests
+        run: docker build -f Dockerfile-tests -t eval-multi-base-tests:latest .
+
+      - name: run tests
+        run: docker run --rm eval-multi-base-tests:latest /home/runner/do/run_tests.sh
+
