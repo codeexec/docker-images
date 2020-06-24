@@ -1,3 +1,23 @@
+:run clang++-10 main.cpp second.cpp -pthread -std=c++17 -o main
+:run ./main
+:cleanup rm ./main
+:file main.cpp
+#include <iostream>
+#include <string>
+
+extern int foo();
+
+int main() {
+  auto n = foo();
+  std::cout << "hello from multi-file clang-10 c++, n=" << n << "\n";
+}
+:file second.cpp
+int foo() {
+  return 8;
+}
+--
+hello from multi-file clang-10 c++, n=8
+---
 :run dotnet run .
 :file main.cs
 using System;
