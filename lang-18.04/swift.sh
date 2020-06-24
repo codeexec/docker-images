@@ -12,6 +12,6 @@ wget -q https://swift.org/builds/swift-${VER}-release/ubuntu1804/swift-${VER}-RE
 # TODO: verify sig
 #wget -q https://swift.org/builds/swift-${VER}-release/ubuntu1804/swift-${VER}-RELEASE/swift-${VER}-RELEASE-ubuntu18.04.tar.gz.sig
 
-tar xzvf swift-${VER}-RELEASE-ubuntu18.04.tar.gz --strip-components=1 -C /
+tar -zxf swift-${VER}-RELEASE-ubuntu18.04.tar.gz --strip-components=1 -C /
 rm swift-*
 chmod -R go+r /usr/lib/swift
