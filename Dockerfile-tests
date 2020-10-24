@@ -1,4 +1,4 @@
-FROM eval-multi-base:latest
+FROM eval-multi-base-20_04:latest
 
 WORKDIR /home/runner
 ADD do do

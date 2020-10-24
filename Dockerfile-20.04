@@ -20,7 +20,7 @@ RUN apt-get install -y locales curl wget xz-utils unzip git subversion mercurial
 # go 1.13.8
 # ruby 2.7.0
 
-ADD lang lang
+ADD lang-20.04 lang
 RUN chmod ug+x lang/*.sh
 
 RUN lang/clang-llvm.sh

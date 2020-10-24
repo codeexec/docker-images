@@ -15,7 +15,7 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
   
       - name: build docker image
-        run: docker build -f Dockerfile -t eval-multi-base:latest .
+        run: docker build -f Dockerfile-20.04 -t eval-multi-base-20_04:latest .
       
       - name: build docker image for tests
         run: docker build -f Dockerfile-tests -t eval-multi-base-tests:latest .

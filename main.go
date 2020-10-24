@@ -15,7 +15,7 @@ var panicIfErr = u.PanicIfErr
 var must = u.Must
 
 func dockerBuild() {
-	cmd := exec.Command("docker", "build", "-f", "Dockerfile", "-t", "eval-multi-base:latest", ".")
+	cmd := exec.Command("docker", "build", "-f", "Dockerfile-20.04", "-t", "eval-multi-base-20_04:latest", ".")
 	u.RunCmdLoggedMust(cmd)
 }
 
