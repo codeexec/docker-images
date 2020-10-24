@@ -67,5 +67,5 @@ RUN lang/rust.sh
 RUN lang/swift.sh
 
 # /var/lib/apt/lists is 25 MB
-RUN rm -rf lang &&
+RUN rm -rf lang && \
     rm -rf /var/lib/apt/lists/*
