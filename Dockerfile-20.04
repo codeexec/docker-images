@@ -66,4 +66,6 @@ RUN lang/quickjs.sh
 RUN lang/rust.sh
 RUN lang/swift.sh
 
-RUN rm -rf lang
+# /var/lib/apt/lists is 25 MB
+RUN rm -rf lang &&
+    rm -rf /var/lib/apt/lists/*
