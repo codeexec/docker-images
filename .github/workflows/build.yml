@@ -16,10 +16,4 @@ jobs:
   
       - name: build docker image
         run: docker build -f Dockerfile-20.04 -t eval-multi-base-20_04:latest .
-      
-      - name: build docker image for tests
-        run: docker build -f Dockerfile-tests -t eval-multi-base-tests:latest .
-
-      - name: run tests
-        run: docker run --rm eval-multi-base-tests:latest /home/runner/do/run_tests.sh
 
