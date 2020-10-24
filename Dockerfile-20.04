@@ -3,10 +3,10 @@ FROM ubuntu:20.04
 WORKDIR /home/runner
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update
 # https://github.com/replit/polygott/blob/master/packages.txt + more
 # some packages are needed for later scripts
-RUN apt-get install -y locales curl wget xz-utils unzip git subversion mercurial bzr build-essential \
+RUN apt-get update -y && \
+    apt-get install -y locales curl wget xz-utils unzip git subversion mercurial bzr build-essential \
     sqlite3 libsqlite3-dev gnupg libc6-dbg libssl-dev libreadline-dev libicu-dev libevent-dev \
     libedit2 libxml2 lsb-release software-properties-common apt-utils apt-transport-https \
     pkg-config cmake ninja-build \
