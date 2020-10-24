@@ -5,10 +5,24 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # https://github.com/replit/polygott/blob/master/packages.txt + more
 # some packages are needed for later scripts
+# uses apt-fast to speedup downloads since downloads take the most time.
+# with apt-fast went from 25m 34s to 10m 21s
+# https://github.com/ilikenwf/apt-fast
+# the image ends up being ~5.3 GB, which is a lot
+
 RUN apt-get update -y && \
-    apt-get install -y locales curl wget xz-utils unzip git subversion mercurial bzr build-essential \
+    apt-get install -y --no-install-recommends software-properties-common apt-utils apt-transport-https && \
+    add-apt-repository -y ppa:apt-fast/stable && \
+    apt-get update -y && \
+    apt-get install -y --no-install-recommends apt-fast && \
+    echo debconf apt-fast/maxdownloads string 16 | debconf-set-selections && \
+    echo debconf apt-fast/dlflag boolean true | debconf-set-selections && \
+    echo debconf apt-fast/aptmanager string apt-get | debconf-set-selections && \
+    apt-fast install -y --no-install-recommends \
+    locales curl wget xz-utils unzip git subversion mercurial bzr build-essential \
     sqlite3 libsqlite3-dev gnupg libc6-dbg libssl-dev libreadline-dev libicu-dev libevent-dev \
-    libedit2 libxml2 lsb-release software-properties-common apt-utils apt-transport-https \
+    libedit2 libxml2 lsb-release \
+    make gcc g++ \
     pkg-config cmake ninja-build \
     clang clang-format lldb lld clangd \
     openjdk-11-jdk maven \
