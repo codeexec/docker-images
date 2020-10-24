@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eux
 
-# https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu#1804-
+# https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu#2004-
 
 echo "installing .NET Core 3.1"
 

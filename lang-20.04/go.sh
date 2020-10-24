@@ -1,13 +1,17 @@
+
 #!/bin/bash
 set -eux
 
-# go 1.14.2
-# https://github.com/replit/polygott/blob/master/languages/go.toml
+# https://golang.org/doc/install
 
-echo "installing go 1.14.2"
+VER=1.15.3
 
-add-apt-repository -y ppa:longsleep/golang-backports
-apt-get update
-apt-get install -y golang-1.14-go
-ln -s /usr/lib/go-1.14/bin/go /usr/bin/go
-ln -s /usr/lib/go-1.14/bin/gofmt /usr/bin/gofmt
+echo "installing go ${VER}"
+
+wget -q https://dl.google.com/go/go${VER}.linux-amd64.tar.gz
+tar -C /usr/local -xzf go${VER}.linux-amd64.tar.gz
+
+#ln -s /usr/local/go/bin/go /usr/bin/go
+#ln -s /usr/local/go/bin/gofmt /usr/bin/gofmt
+
+rm go${VER}.linux-amd64.tar.gz

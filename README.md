@@ -1,4 +1,4 @@
-This is a eval-multi-base docker image.
+This is a eval-multi-base-20_04 docker image.
 
 It includes all the languages but not the runner.
 

@@ -2,14 +2,14 @@
 set -eux
 
 # https://bellard.org/quickjs/
-echo "installing quickjs"
+VER=2020-09-06
+echo "installing quickjs ${VER}"
 
-# http://www.lua.org/download.html
-wget -q https://bellard.org/quickjs/quickjs-2020-04-12.tar.xz
-tar -xf quickjs-2020-04-12.tar.xz
-cd quickjs-2020-04-12
+wget -q https://bellard.org/quickjs/quickjs-${VER}.tar.xz
+tar -xf quickjs-${VER}.tar.xz
+cd quickjs-${VER}
 make
 make install
 cd ..
 
-rm -rf quickjs-2020-04-12*
+rm -rf quickjs-${VER}*

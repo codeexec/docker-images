@@ -6,7 +6,7 @@ echo "installing swift"
 
 # https://swift.org/download/#releases
 
-VER=5.2.4
+VER=5.3
 wget -q https://swift.org/builds/swift-${VER}-release/ubuntu2004/swift-${VER}-RELEASE/swift-${VER}-RELEASE-ubuntu20.04.tar.gz
 
 # TODO: verify sig

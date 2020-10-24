@@ -1,7 +1,0 @@
-FROM eval-multi-base-20_04:latest
-
-WORKDIR /home/runner
-ADD do do
-RUN chmod +x /home/runner/do/run_tests.sh
-
-CMD /home/runner/do/run_tests.sh

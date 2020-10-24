@@ -14,8 +14,13 @@ var panicIf = u.PanicIf
 var panicIfErr = u.PanicIfErr
 var must = u.Must
 
-func dockerBuild() {
-	cmd := exec.Command("docker", "build", "-f", "Dockerfile-20.04", "-t", "eval-multi-base-20_04:latest", ".")
+func dockerBuild(noCache bool) {
+	var cmd *exec.Cmd
+	if noCache {
+		cmd = exec.Command("docker", "build", "--no-cache", "-f", "Dockerfile-20.04", "-t", "eval-multi-base-20_04:latest", ".")
+	} else {
+		cmd = exec.Command("docker", "build", "-f", "Dockerfile-20.04", "-t", "eval-multi-base-20_04:latest", ".")
+	}
 	u.RunCmdLoggedMust(cmd)
 }
 
@@ -38,11 +43,13 @@ func main() {
 		flgRunTests    bool
 		flgBuildGcr    bool
 		flgDockerBuild bool
+		flgNoCache     bool
 	)
 
 	flag.BoolVar(&flgRunTests, "run-tests", false, "run tests inside docker image")
 	flag.BoolVar(&flgBuildGcr, "build-gcr", false, "submit to GCR for build")
-	flag.BoolVar(&flgDockerBuild, "docker-build", false, "build the image locally with docker")
+	flag.BoolVar(&flgDockerBuild, "build-docker", false, "build the image locally with docker")
+	flag.BoolVar(&flgNoCache, "no-cache", false, "if true, disable docker build cache")
 	flag.Parse()
 
 	timeStart := time.Now()
@@ -64,7 +71,7 @@ func main() {
 	}
 
 	if flgDockerBuild {
-		dockerBuild()
+		dockerBuild(flgNoCache)
 		fmt.Printf("Took %s\n", time.Since(timeStart))
 		return
 	}
