@@ -9,7 +9,14 @@ RUN apt-get update
 RUN apt-get install -y locales curl wget xz-utils unzip git subversion mercurial bzr build-essential \
     sqlite3 libsqlite3-dev gnupg libc6-dbg libssl-dev libreadline-dev libicu-dev libevent-dev \
     libedit2 libxml2 lsb-release software-properties-common apt-utils apt-transport-https \
-    pkg-config cmake ninja-build
+    pkg-config cmake ninja-build \
+    clang clang-format lldb lld clangd \
+    openjdk-11-jdk maven \
+    lua5.3 luarocks \
+    luajit \
+    php-cli php-pear \
+    python3-pip python3-wheel python3-dev \
+    ruby ruby-dev
 
 # versions in 20.04:
 # gcc 9.3
@@ -26,37 +33,23 @@ RUN apt-get install -y locales curl wget xz-utils unzip git subversion mercurial
 ADD lang-20.04 lang
 RUN chmod ug+x lang/*.sh
 
-RUN lang/clang-llvm.sh
-
+# RUN lang/clang-llvm.sh
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 RUN lang/csharp.sh
-
 RUN lang/dart.sh
-
 # must install before deno.sh
 RUN lang/nodejs.sh
-
 RUN lang/deno.sh
-
 RUN lang/go.sh
 ENV PATH="${PATH}:/usr/local/go/bin"
-
-RUN lang/java.sh
-
-RUN lang/lua.sh
-
-RUN lang/luajit.sh
-
-RUN lang/php.sh
-
-RUN lang/python3.sh
-
+# RUN lang/java.sh
+# RUN lang/lua.sh
+# RUN lang/luajit.sh
+# RUN lang/php.sh
+# RUN lang/python3.sh
 RUN lang/quickjs.sh
-
-RUN lang/ruby.sh
-
+# RUN lang/ruby.sh
 RUN lang/rust.sh
-
 RUN lang/swift.sh
 
 RUN rm -rf lang
